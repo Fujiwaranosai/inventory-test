@@ -1,0 +1,46 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <!--Sidebar content-->
+
+        </div>
+        <div class="col-md-10">
+            <!--Body content-->
+
+            <table datatable="ng" dt-options="dtOptions" class="row-border hover">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Vendor</th>
+                    <th>Type</th>
+                    <th>Serial number</th>
+                    <th>Price</th>
+                    <th>Weight</th>
+                    <th>Color</th>
+                    <th>Release date</th>
+                    <th>Published</th>
+                    <th>Photo</th>
+                    <th>Created date</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="product in products">
+                    <td>{{product.id}}</td>
+                    <td>{{product.item_name}}</td>
+                    <td>{{product.vendor}}</td>
+                    <td>{{product.type}}</td>
+                    <td>{{product.serial_number}}</td>
+                    <td>{{product.price}}</td>
+                    <td>{{product.weight}}</td>
+                    <td>{{product.color}}</td>
+                    <td>{{product.release_date}}</td>
+                    <td>{{product.published}}</td>
+                    <td>{{product.photo}}</td>
+                    <td>{{product.create_date}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

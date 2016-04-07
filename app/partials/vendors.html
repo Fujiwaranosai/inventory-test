@@ -1,0 +1,46 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <input placeholder="Vendor name" ng-model="new_name"/>
+        </div>
+        <div class="col-md-4">
+            <input placeholder="Vendor logo url" ng-model="new_url"/>
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-primary" ng-click="addVendor()">Add Vendor</button>
+        </div>
+    </div>
+    <div class="row" style="padding-top: 20px;">
+        <div class="col-md-10">
+            <!--Body content-->
+            <table datatable="ng" dt-options="dtOptions" class="row-border hover">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Logo</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="vendor in vendors" class="tablerow">
+                    <td>{{vendor.id}}</td>
+                    <td>
+                        <label ng-hide="name_editing" ng-click="name_editing=true">{{vendor.name}}</label>
+                        <input ng-show="name_editing" ng-model="vendor.name"
+                               ng-blur="name_editing=false" type="text" show-focus="name_editing"/>
+                    </td>
+                    <td>
+                        <label ng-hide="logo_editing" ng-click="logo_editing=true">{{vendor.logo}}</label>
+                        <input ng-show="logo_editing" ng-model="vendor.logo"
+                               ng-blur="logo_editing=false" type="text" show-focus="logo_editing"/>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger" ng-click="deleteVendor(vendor.id, $index)">Delete</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
