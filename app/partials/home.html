@@ -7,7 +7,7 @@
         <div class="col-md-10">
             <!--Body content-->
 
-            <table datatable="ng" dt-options="dtOptions" class="row-border hover">
+            <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumns" class="row-border hover" width="100%">
                 <thead>
                 <tr>
                     <th>ID</th>
@@ -19,9 +19,8 @@
                     <th>Weight</th>
                     <th>Color</th>
                     <th>Release date</th>
-                    <th>Published</th>
-                    <th>Photo</th>
                     <th>Created date</th>
+                    <th>Photo</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -34,10 +33,9 @@
                     <td>{{product.price}}</td>
                     <td>{{product.weight}}</td>
                     <td>{{product.color}}</td>
-                    <td>{{product.release_date}}</td>
-                    <td>{{product.published}}</td>
+                    <td>{{product.release_date | unix}}</td>
+                    <td>{{product.create_date | unix}}</td>
                     <td>{{product.photo}}</td>
-                    <td>{{product.create_date}}</td>
                 </tr>
                 </tbody>
             </table>

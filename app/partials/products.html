@@ -5,7 +5,7 @@
     <div class="row">
         <!--Body content-->
 
-        <table datatable="ng" dt-options="dtOptions" class="row-border hover">
+        <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumns" class="row-border hover" width="100%">
             <thead>
             <tr>
                 <th>ID</th>
@@ -17,24 +17,24 @@
                 <th>Weight</th>
                 <th>Color</th>
                 <th>Release date</th>
+                <th>Created date</th>
                 <th>Published</th>
                 <th>Photo</th>
-                <th>Created date</th>
                 <th>Action</th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="product in products" class="tablerow">
                 <td>{{product.id}}</td>
-                <td>
+                <td style="max-width: 180px;">
                     <label ng-hide="name_editing" ng-click="name_editing=true">{{product.item_name}}</label>
                     <input ng-show="name_editing" ng-model="product.item_name"
                            ng-blur="name_editing=false" type="text" show-focus="name_editing"/>
                 </td>
-                <td>
+                <td style="max-width: 125px;">
                     <label ng-hide="product.vendor_editing" ng-click="editVendor($index)">{{product.vendor_name}}</label>
                     <ui-select ng-model="product.selectedVendor" ng-show="product.vendor_editing" show-focus="product.vendor_editing"
-                               type="text" theme="bootstrap"
+                               type="text" theme="bootstrap" ng-init="product.vendorUiSelect=$select"
                                on-select="vendorSelected($item, $index)" select-on-blur>
                         <ui-select-match>
                             <span ng-bind="$select.selected.name"></span>
@@ -44,48 +44,68 @@
                         </ui-select-choices>
                     </ui-select>
                 </td>
-                <td>
-                    <label ng-hide="type_editing" ng-click="type_editing=true">{{product.type_name}}</label>
+                <td style="max-width: 125px;">
+                    <label ng-hide="product.type_editing" ng-click="editType($index)">{{product.type_name}}</label>
+                    <ui-select ng-model="product.selectedType" ng-show="product.type_editing" show-focus="product.type_editing"
+                               type="text" theme="bootstrap" ng-init="product.typeUiSelect=$select"
+                               on-select="typeSelected($item, $index)" select-on-blur>
+                        <ui-select-match>
+                            <span ng-bind="$select.selected.name"></span>
+                        </ui-select-match>
+                        <ui-select-choices repeat="item in types | filter: $select.search track by item.id">
+                            <span ng-bind="item.name"></span>
+                        </ui-select-choices>
+                    </ui-select>
                 </td>
-                <td>
+                <td style="max-width: 130px;">
                     <label ng-hide="serial_editing" ng-click="serial_editing=true">{{product.serial_number}}</label>
                     <input ng-show="serial_editing" ng-model="product.serial_number"
                            ng-blur="serial_editing=false" type="text" show-focus="serial_editing"/>
                 </td>
-                <td>
-                    <label ng-hide="price_editing" ng-click="price_editing=true">{{product.price}}</label>
+                <td style="max-width: 130px;">
+                    <label ng-hide="price_editing" ng-click="price_editing=true">{{product.price | usd}}</label>
                     <input ng-show="price_editing" ng-model="product.price"
                            ng-blur="price_editing=false" type="text" show-focus="price_editing"/>
                 </td>
-                <td>
+                <td style="max-width: 130px;">
                     <label ng-hide="weight_editing" ng-click="weight_editing=true">{{product.weight}}</label>
                     <input ng-show="weight_editing" ng-model="product.weight"
                            ng-blur="weight_editing=false" type="text" show-focus="weight_editing"/>
                 </td>
-                <td>
+                <td style="max-width: 130px;">
                     <label ng-hide="color_editing" ng-click="color_editing=true">{{product.color}}</label>
                     <input ng-show="color_editing" ng-model="product.color"
                            ng-blur="color_editing=false" type="text" show-focus="color_editing"/>
                 </td>
                 <td>
-                    <label ng-hide="release_editing" ng-click="release_editing=true">{{product.release_date}}</label>
-                    <input ng-show="release_editing" ng-model="product.release_date"
-                           ng-blur="release_editing=false" type="text" show-focus="release_editing"/>
+                    <div class="input-group">
+                        <input ng-model="product.release_date" type="text" is-open="product.releaseDPOpened"
+                               uib-datepicker-popup="{{format}}" datepicker-options="dateOptions"
+                               close-text="Close" unix readonly/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="openReleaseDP(product)"><i class="glyphicon glyphicon-calendar"></i> </button>
+                    </span>
+                    </div>
                 </td>
                 <td>
-                    <label ng-hide="published_editing" ng-click="published_editing=true">{{product.published}}</label>
-                    <input ng-show="published_editing" ng-model="product.published"
-                           ng-blur="published_editing=false" type="text" show-focus="published_editing"/>
+                    <div class="input-group">
+                        <input ng-model="product.create_date" type="text" is-open="product.createDPOpened"
+                               uib-datepicker-popup="{{format}}" datepicker-options="dateOptions"
+                               close-text="Close" unix readonly/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="openCreateDP(product)"><i class="glyphicon glyphicon-calendar"></i> </button>
+                    </span>
+                    </div>
                 </td>
                 <td>
-                    <label ng-hide="photo_editing" ng-click="photo_editing=true">{{product.photo}}</label>
+                    <label><input ng-model="product.published" type="checkbox"
+                                  ng-true-value="1" ng-false-value="0"/></label>
+
+                </td>
+                <td style="max-width: 200px;">
+                    <a ng-hide="photo_editing" ng-click="photo_editing=true">{{product.photo}}</a>
                     <input ng-show="photo_editing" ng-model="product.photo"
                            ng-blur="photo_editing=false" type="text" show-focus="photo_editing"/>
-                </td>
-                <td>
-                    <label ng-hide="create_editing" ng-click="create_editing=true">{{product.create_date}}</label>
-                    <input ng-show="create_editing" ng-model="product.create_date"
-                           ng-blur="create_editing=false" type="text" show-focus="create_editing"/>
                 </td>
                 <td>
                     <button type="button" class="btn btn-danger">Delete</button>

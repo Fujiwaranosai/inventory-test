@@ -34,26 +34,26 @@ var app = angular.module('inventoryApp', [
 					vendor: 1,
 					type: 1,
 					serial_number: '0123456789',
-					price: '600$',
+					price: '600',
 					weight: '500g',
 					color: 'white',
-					release_date: 'today',
+					release_date: '1460035747',
 					published: 1,
 					photo: 'abc',
-					create_date: 'today'
+					create_date: '1460035747'
 				});
 				product.add({
 					item_name: 'IPad Air',
 					vendor: 1,
 					type: 2,
 					serial_number: '0123456789',
-					price: '600$',
+					price: '600',
 					weight: '500g',
 					color: 'white',
-					release_date: 'today',
+					release_date: '1460035747',
 					published: 1,
 					photo: 'abc',
-					create_date: 'today'
+					create_date: '1460035747'
 				});
 
 				var vendor = db.createObjectStore('vendor', { keyPath: 'id', autoIncrement: true });
