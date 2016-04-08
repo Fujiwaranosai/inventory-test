@@ -28,12 +28,12 @@
                     <td>
                         <label ng-hide="name_editing" ng-click="name_editing=true">{{vendor.name}}</label>
                         <input ng-show="name_editing" ng-model="vendor.name"
-                               ng-blur="name_editing=false" type="text" show-focus="name_editing"/>
+                               ng-blur="name_editing=false; editVendor($index)" type="text" show-focus="name_editing"/>
                     </td>
                     <td>
                         <label ng-hide="logo_editing" ng-click="logo_editing=true">{{vendor.logo}}</label>
                         <input ng-show="logo_editing" ng-model="vendor.logo"
-                               ng-blur="logo_editing=false" type="text" show-focus="logo_editing"/>
+                               ng-blur="logo_editing=false; editVendor($index)" type="text" show-focus="logo_editing"/>
                     </td>
                     <td>
                         <button type="button" class="btn btn-danger" ng-click="deleteVendor(vendor.id, $index)">Delete</button>

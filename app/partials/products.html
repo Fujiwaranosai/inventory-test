@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="row">
-        <button type="button" class="btn btn-primary" ng-click="addProduct()">Add new product</button>
+        <button type="button" class="btn btn-primary" ng-click="openAddProduct()">Add new product</button>
     </div>
     <div class="row">
         <!--Body content-->
@@ -25,11 +25,11 @@
             </thead>
             <tbody>
             <tr ng-repeat="product in products" class="tablerow">
-                <td>{{product.id}}</td>
+                <td><a ng-click="openEditProduct($index)" href="">{{product.id}}</a></td>
                 <td style="max-width: 180px;">
                     <label ng-hide="name_editing" ng-click="name_editing=true">{{product.item_name}}</label>
                     <input ng-show="name_editing" ng-model="product.item_name"
-                           ng-blur="name_editing=false" type="text" show-focus="name_editing"/>
+                           ng-blur="name_editing=false; editProduct($index)" type="text" show-focus="name_editing"/>
                 </td>
                 <td style="max-width: 125px;">
                     <label ng-hide="product.vendor_editing" ng-click="editVendor($index)">{{product.vendor_name}}</label>
@@ -60,28 +60,28 @@
                 <td style="max-width: 130px;">
                     <label ng-hide="serial_editing" ng-click="serial_editing=true">{{product.serial_number}}</label>
                     <input ng-show="serial_editing" ng-model="product.serial_number"
-                           ng-blur="serial_editing=false" type="text" show-focus="serial_editing"/>
+                           ng-blur="serial_editing=false; editProduct($index)" type="text" show-focus="serial_editing"/>
                 </td>
                 <td style="max-width: 130px;">
                     <label ng-hide="price_editing" ng-click="price_editing=true">{{product.price | usd}}</label>
-                    <input ng-show="price_editing" ng-model="product.price"
-                           ng-blur="price_editing=false" type="text" show-focus="price_editing"/>
+                    <input ng-show="price_editing" ng-model="product.price" number-only usd
+                           ng-blur="price_editing=false; editProduct($index)" type="text" show-focus="price_editing"/>
                 </td>
                 <td style="max-width: 130px;">
                     <label ng-hide="weight_editing" ng-click="weight_editing=true">{{product.weight}}</label>
                     <input ng-show="weight_editing" ng-model="product.weight"
-                           ng-blur="weight_editing=false" type="text" show-focus="weight_editing"/>
+                           ng-blur="weight_editing=false; editProduct($index)" type="text" show-focus="weight_editing"/>
                 </td>
                 <td style="max-width: 130px;">
                     <label ng-hide="color_editing" ng-click="color_editing=true">{{product.color}}</label>
                     <input ng-show="color_editing" ng-model="product.color"
-                           ng-blur="color_editing=false" type="text" show-focus="color_editing"/>
+                           ng-blur="color_editing=false; editProduct($index)" type="text" show-focus="color_editing"/>
                 </td>
                 <td>
                     <div class="input-group">
                         <input ng-model="product.release_date" type="text" is-open="product.releaseDPOpened"
                                uib-datepicker-popup="{{format}}" datepicker-options="dateOptions"
-                               close-text="Close" unix readonly/>
+                               close-text="Close" unix readonly ng-change="editProduct($index)"/>
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="openReleaseDP(product)"><i class="glyphicon glyphicon-calendar"></i> </button>
                     </span>
@@ -91,7 +91,7 @@
                     <div class="input-group">
                         <input ng-model="product.create_date" type="text" is-open="product.createDPOpened"
                                uib-datepicker-popup="{{format}}" datepicker-options="dateOptions"
-                               close-text="Close" unix readonly/>
+                               close-text="Close" unix readonly ng-change="editProduct($index)"/>
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="openCreateDP(product)"><i class="glyphicon glyphicon-calendar"></i> </button>
                     </span>
@@ -99,16 +99,16 @@
                 </td>
                 <td>
                     <label><input ng-model="product.published" type="checkbox"
-                                  ng-true-value="1" ng-false-value="0"/></label>
+                                  ng-true-value="1" ng-false-value="0" ng-change="editProduct($index)"/></label>
 
                 </td>
                 <td style="max-width: 200px;">
                     <a ng-hide="photo_editing" ng-click="photo_editing=true">{{product.photo}}</a>
                     <input ng-show="photo_editing" ng-model="product.photo"
-                           ng-blur="photo_editing=false" type="text" show-focus="photo_editing"/>
+                           ng-blur="photo_editing=false; editProduct($index)" type="text" show-focus="photo_editing"/>
                 </td>
                 <td>
-                    <button type="button" class="btn btn-danger">Delete</button>
+                    <button type="button" class="btn btn-danger" ng-click="deleteProduct(product.id, $index)">Delete</button>
                 </td>
             </tr>
             </tbody>

@@ -22,4 +22,15 @@ app.service('VendorService', function ($indexedDB) {
 			store.delete(id).then(callback);
 		});
 	};
+
+	this.edit = function(vendor, callback) {
+		var _vendor = {
+			id: vendor.id,
+			name: vendor.name,
+			logo: vendor.logo
+		};
+		$indexedDB.openStore(storeName, function(store) {
+			store.upsert(_vendor).then(callback);
+		});
+	};
 });

@@ -1,8 +1,23 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-2" style="padding-top: 10px;">
             <!--Sidebar content-->
-
+            <div class="row" style="font-weight: bold;">
+                Latest products
+            </div>
+            <ul ng-repeat="product in latestProducts">
+                <div class="row" style="padding-top: 25px;">
+                    <div class="col-md-4">
+                        <img ng-src="{{product.vendor_logo}}" style="width: 60px;" err-src="img/missing.png">
+                    </div>
+                    <div class="col-md-8">
+                        <img ng-src="{{product.photo}}" style="width: 100%;" err-src="img/missing.png">
+                    </div>
+                </div>
+                <div class="row" style="font-weight: bold; padding-top:5px;">
+                    {{product.item_name}} ({{product.vendor_name}}), {{product.price | usd}}
+                </div>
+            </ul>
         </div>
         <div class="col-md-10">
             <!--Body content-->
@@ -25,17 +40,17 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="product in products">
-                    <td>{{product.id}}</td>
-                    <td>{{product.item_name}}</td>
-                    <td>{{product.vendor}}</td>
-                    <td>{{product.type}}</td>
-                    <td>{{product.serial_number}}</td>
-                    <td>{{product.price}}</td>
-                    <td>{{product.weight}}</td>
-                    <td>{{product.color}}</td>
-                    <td>{{product.release_date | unix}}</td>
-                    <td>{{product.create_date | unix}}</td>
-                    <td>{{product.photo}}</td>
+                    <td><a href="" ng-click="openEditProduct($index)">{{product.id}}</a></td>
+                    <td style="max-width: 180px;">{{product.item_name}}</td>
+                    <td style="max-width: 125px;">{{product.vendor_name}}</td>
+                    <td style="max-width: 125px;">{{product.type_name}}</td>
+                    <td style="max-width: 130px;">{{product.serial_number}}</td>
+                    <td style="max-width: 130px;">{{product.price | usd}}</td>
+                    <td style="max-width: 130px;">{{product.weight}}</td>
+                    <td style="max-width: 130px;">{{product.color}}</td>
+                    <td style="max-width: 125px;;">{{product.release_date | unix}}</td>
+                    <td style="max-width: 125px;">{{product.create_date | unix}}</td>
+                    <td style="max-width: 130px;"><span class="truncate">{{product.photo}}</span></td>
                 </tr>
                 </tbody>
             </table>

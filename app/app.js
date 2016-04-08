@@ -12,7 +12,7 @@ var app = angular.module('inventoryApp', [
 				controller: 'homeCtrl'
 			})
 			.when('/dashboard', {
-				templateUrl: '',
+				templateUrl: 'partials/dashboard.html',
 				controller: 'dashboardCtrl'
 			})
 			.when('/products', {
@@ -29,6 +29,7 @@ var app = angular.module('inventoryApp', [
 			.upgradeDatabase(1, function(event, db, tx) {
 				var product = db.createObjectStore('product', { keyPath: 'id', autoIncrement: true });
 				product.createIndex('published_idx', 'published', { unique: false });
+				var today = moment().unix() * 1000;
 				product.add({
 					item_name: 'Iphone 6S',
 					vendor: 1,
@@ -37,10 +38,10 @@ var app = angular.module('inventoryApp', [
 					price: '600',
 					weight: '500g',
 					color: 'white',
-					release_date: '1460035747',
+					release_date: today,
 					published: 1,
-					photo: 'abc',
-					create_date: '1460035747'
+					photo: 'http://cdn2.gsmarena.com/vv/bigpic/apple-iphone-6s1.jpg',
+					create_date: today
 				});
 				product.add({
 					item_name: 'IPad Air',
@@ -50,15 +51,15 @@ var app = angular.module('inventoryApp', [
 					price: '600',
 					weight: '500g',
 					color: 'white',
-					release_date: '1460035747',
+					release_date: today,
 					published: 1,
-					photo: 'abc',
-					create_date: '1460035747'
+					photo: 'http://b-i.forbesimg.com/patrickmoorhead/files/2013/11/iPad-Air.jpg',
+					create_date: today
 				});
 
 				var vendor = db.createObjectStore('vendor', { keyPath: 'id', autoIncrement: true });
-				vendor.add({ name: 'Apple', logo: 'apple_logo' });
-				vendor.add({ name: 'HTC', logo: 'htc_logo' });
+				vendor.add({ name: 'Apple', logo: 'http://cdn.osxdaily.com/wp-content/uploads/2010/10/giant-apple-logo-bw.png' });
+				vendor.add({ name: 'HTC', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Htc_new_logo.svg/2000px-Htc_new_logo.svg.png' });
 
 				var type = db.createObjectStore('type', { keyPath: 'id', autoIncrement: true });
 				type.add({ name: 'Phone' });

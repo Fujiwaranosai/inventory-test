@@ -21,8 +21,6 @@ app.controller('productCtrl', function($scope, ProductService, VendorService,
 				} else {
 					product.vendor_name = 'N/A';
 				}
-				product.release_date = new Date(product.release_date * 1000);
-				product.create_date = new Date(product.create_date * 1000);
 			});
 			$scope.vendors = results;
 			TypeService.getAll(function(results) {
@@ -58,7 +56,7 @@ app.controller('productCtrl', function($scope, ProductService, VendorService,
 		DTColumnDefBuilder.newColumnDef(12).withOption('width', '75px'),
 	];
 
-	$scope.addProduct = function() {
+	$scope.openAddProduct = function() {
 		var modal = $uibModal.open({
 			animation: true,
 			templateUrl: 'modals/new-product.html',
@@ -66,13 +64,42 @@ app.controller('productCtrl', function($scope, ProductService, VendorService,
 			resolve: {
 				item: function() {
 					return {
-						name: 'test'
+						name: 'test',
+						vendors: $scope.vendors,
+						types: $scope.types
 					};
 				}
 			}
 		});
 		modal.result.then(function(item) {
-			console.log(item);
+			ProductService.add(item, function(e) {
+				item.id = e[0];
+				$scope.products.push(item);
+			});
+		}, function() {
+		});
+	};
+
+	$scope.openEditProduct = function($index) {
+		var product = $scope.products[$index];
+		var modal = $uibModal.open({
+			animation: true,
+			templateUrl: 'modals/new-product.html',
+			controller: 'newProductCtrl',
+			resolve: {
+				item: function() {
+					return {
+						name: 'test',
+						vendors: $scope.vendors,
+						types: $scope.types,
+						product: product
+					};
+				}
+			}
+		});
+		modal.result.then(function(item) {
+			ProductService.copyProduct(item, product);
+			ProductService.edit(item, function(e) { });
 		}, function() {
 		});
 	};
@@ -89,6 +116,7 @@ app.controller('productCtrl', function($scope, ProductService, VendorService,
 		product.vendor_name = $item.name;
 		product.vendor = $item.id;
 		product.vendor_editing = false;
+		$scope.editProduct($index);
 	};
 
 	$scope.editType = function($index) {
@@ -103,6 +131,7 @@ app.controller('productCtrl', function($scope, ProductService, VendorService,
 		product.type_name = $item.name;
 		product.type = $item.id;
 		product.type_editing = false;
+		$scope.editProduct($index);
 	};
 
 	$scope.openReleaseDP = function(product) {
@@ -110,5 +139,16 @@ app.controller('productCtrl', function($scope, ProductService, VendorService,
 	};
 	$scope.openCreateDP = function(product) {
 		product.createDPOpened = true;
+	};
+
+	$scope.deleteProduct = function(id, $index) {
+		ProductService.delete(id, function(e) {
+			$scope.products.splice($index, 1);
+		});
+	};
+
+	$scope.editProduct = function($index) {
+		var product = $scope.products[$index];
+		ProductService.edit(product, function(e) { });
 	};
 });

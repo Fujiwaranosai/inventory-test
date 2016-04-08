@@ -22,7 +22,6 @@ app.controller('vendorCtrl', function($scope, VendorService, DTOptionsBuilder) {
 			return;
 		}
 		VendorService.add({ name: name, logo: logo }, function(e) {
-			console.log(e);
 			if (e === undefined || e.length == 0) {
 				return;
 			}
@@ -38,8 +37,12 @@ app.controller('vendorCtrl', function($scope, VendorService, DTOptionsBuilder) {
 
 	$scope.deleteVendor = function(id, $index) {
 		VendorService.delete(id, function(e) {
-			console.log(e);
 			$scope.vendors.splice($index, 1);
 		});
+	};
+
+	$scope.editVendor = function($index) {
+		var vendor = $scope.vendors[$index];
+		VendorService.edit(vendor, function(e) { });
 	};
 });

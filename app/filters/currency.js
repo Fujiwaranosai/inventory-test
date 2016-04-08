@@ -4,6 +4,10 @@
 
 app.filter('usd', function() {
 	var func = function(data) {
+		if (!data) {
+			return;
+		}
+		data = data.toString();
 		if(data.indexOf('$') == data.length - 1) {
 			return data;
 		}

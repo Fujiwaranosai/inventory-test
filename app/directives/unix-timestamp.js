@@ -9,7 +9,7 @@ app.directive('unix', function() {
 		link: function(scope, elem, attr, ctrl) {
 			var fromUser = function(text) {
 				var d = Date.parse(text);
-				return (d / 1000);
+				return d;
 			};
 			var toUser = function(time) {
 				console.log(time);
